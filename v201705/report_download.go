@@ -52,7 +52,7 @@ func (s *ReportDownloadService) Get(reportDefinition ReportDefinition) (res inte
 	return parseReport(resp.Body)
 }
 
-func (s *ReportDownloadService) AWQL(awql string, fmt string) (res interface{}, err error) {
+func (s *ReportDownloadService) AWQL(awql string, fmt string) (res []map[string]string, err error) {
 	form := url.Values{}
 	form.Add("__rdquery", awql)
 	form.Add("__fmt", fmt)
