@@ -2,15 +2,18 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 
 	gads "github.com/Getsidecar/gads/v201710"
-	"golang.org/x/oauth2"
 )
 
+var configJSON = flag.String("oauth", "./config.json", "API credentials")
+
 func main() {
-	config, err := gads.NewCredentials(oauth2.NoContext)
+	flag.Parse()
+	config, err := gads.NewCredentialsFromFile(*configJSON)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -55,8 +58,8 @@ func main() {
 			log.Fatal(err)
 		}
 		for _, campaign := range foundCampaigns {
-			campaignJson, _ := json.MarshalIndent(campaign, "", "  ")
-			fmt.Printf("%s\n", campaignJson)
+			campaignJSON, _ := json.MarshalIndent(campaign, "", "  ")
+			fmt.Printf("%s\n", campaignJSON)
 		}
 		offset += pageSize
 		paging.Offset = offset
